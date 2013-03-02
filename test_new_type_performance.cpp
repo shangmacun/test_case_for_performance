@@ -65,6 +65,21 @@ int32_t case2_new(int32_t size, T ** ret, T & value) {
 }
 
 template <typename T>
+int32_t case6_new(int32_t size, T ** ret, T & value) {
+
+    if (ret == NULL && size <= 0) return -1;
+    T *p = (T *)malloc(sizeof(T) * size); 
+    if (p == NULL) {
+        return -2;
+    }
+    for (int i = 0; i < size ; i++) {
+        p[i] = value;
+    }
+    *ret = p;
+    return 0;
+}
+
+template <typename T>
 int32_t case4_new(int32_t size, T ** ret) {
 
     if (ret == NULL && size <= 0) return -1;
@@ -150,6 +165,23 @@ int32_t INT_CASE_TEST()
         }
     }
     /* case2 end */
+    /* case6 */
+    start = getMicroTime();
+    for (int i = 0 ; i < TYPE_COUNT; ++i) {
+        if (0 != case6_new<int32_t>((int32_t)TYPE_NUM, &pInt[i], value)) {
+            cout << "case6_new_std process faild.." << endl; 
+            return -1;
+        }
+    }
+    end = getMicroTime();
+    cout << "int case6_new process :" << end - start << " value : " << pInt[r1][r2] <<endl;
+    for (int i = 0 ; i < TYPE_COUNT; ++i) {
+        if (pInt[i]) { 
+            free(pInt[i]);
+            pInt[i] = NULL;
+        }
+    }
+    /* case6  end*/
     return 0;
 }
 
