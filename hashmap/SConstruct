@@ -1,0 +1,2 @@
+Program("main",["test.cpp", "StringUtils.cpp", "xrand.cpp"], 
+	CPPFLAGS = "-g -O2")
